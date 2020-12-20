@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  before_action :set_task, only: [:edit, :update]
+
   def index
     @tasks = Task.all
   end
@@ -19,6 +21,16 @@ class TasksController < ApplicationController
   def edit
   end
 
+  def update
+    if @task.update(task_params)
+      redirect_to tasks_path, notice: "更新しました。"
+    else
+      flash[:danger] = "更新に失敗しました。"
+      render :edit
+    end
+  end
+  
+
   def show
   end
 
@@ -29,5 +41,8 @@ class TasksController < ApplicationController
       :content
     )    
   end
-  
+
+  def set_task
+    @task = Task.find(params[:id])    
+  end
 end
