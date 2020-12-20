@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th>タスク名</th>
+      <th>内容</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.name %></td>
+        <td><%= task.content %></td>
+        <td><button type="button"><%= link_to "編集", edit_task_path(task.id) %></button></td>
+        <td><button type="button"><%= link_to "削除", task_path(task.id), method: :delete, data: { confirm: '本当に削除していいですか?' } %></button></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
