@@ -1,0 +1,33 @@
+<%= form_with(model: @task, local:true) do |f| %>
+  <% if @task.errors.any? %>
+    <ul>
+      <% @task.errors.full_messages.each do |message| %>
+        <li>・<%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <div>
+    <%= f.label :タスク名 %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :内容 %><br>
+    <%= f.text_area :content %>
+  </div>
+  <div>
+    <%= f.label :終了期限 %><br>
+    <%= f.datetime_field :deadline %>
+  </div>
+  <div>
+    <%= f.label :優先順位 %><br>
+    <%= f.select :priority, ["低", "中", "高"] %>
+  </div>
+  <div>
+    <%= f.label :ステータス %><br>
+    <%= f.select :status, ["未着手", "着手中", "完了"] %>
+  </div>
+
+  <div>
+    <%= f.submit "登録", disable_with: '登録中...' %>
+  </div>
+<% end %>
