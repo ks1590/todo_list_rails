@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
-  root "tasks#index"
+  root "users#new"
+  resources :users
   resources :tasks
 end
