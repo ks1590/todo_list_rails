@@ -7,6 +7,7 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @task.deadline = Date.today
   end
 
   def create
@@ -44,7 +45,10 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(
       :name,
-      :content
+      :content,
+      :deadline,
+      :priority,
+      :status
     )    
   end
 
