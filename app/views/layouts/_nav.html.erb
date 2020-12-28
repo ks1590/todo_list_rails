@@ -1,0 +1,7 @@
+<% if logged_in? %>
+  <%= link_to "プロフィール", user_path(current_user.id) %>
+  <%= link_to "ログアウト", session_path(current_user.id), method: :delete %>
+<% else %>
+  <li><%= link_to "新しいアカウントを作成", new_user_path %></li>
+  <li><%= link_to "ログイン", new_session_path %>
+<% end %>
