@@ -10,6 +10,16 @@
   </head>
 
   <body>
+    <%= render '/layouts/nav' %>
+    <% if flash[:notice]%>
+      <div>
+        <%= flash[:notice] %>
+      </div>
+    <% elsif flash[:danger] %>
+      <div>
+        <%= flash[:danger] %>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>
