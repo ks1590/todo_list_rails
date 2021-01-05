@@ -1,30 +1,42 @@
 <div class="row">
-<div class="col-md-10 col-md-offset-1">
-  <button type="button"><%= link_to "新しいToDoリストを作成する", new_task_path %></button>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>タスク名</th>
-        <th>内容</th>
-        <th>期限</th>
-        <th>優先度</th>
-        <th>ステータス</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @tasks.each do |task| %>
-        <tr>
-          <td><%= task.name %></td>
-          <td><%= task.content %></td>
-          <td><%= task.deadline %></td>
-          <td><%= task.priority %></td>
-          <td><%= task.status %></td>
-          <td><button type="button"><%= link_to "詳細", task_path(task.id) %></button></td>
-          <td><button type="button"><%= link_to "編集", edit_task_path(task.id) %></button></td>
-          <td><button type="button"><%= link_to "削除", task_path(task.id), method: :delete, data: { confirm: '本当に削除していいですか?' } %></button></td>
-        </tr>
+  <div class="col-md-10 col-md-offset-1">
+    <div>
+      <%= form_with(scope: :search, url: tasks_path, method: :get, local: true) do |f| %>
+        <%= f.label :タスク検索 %>
+        <%= f.text_field :name, placeholder: "キーワード検索", value: @get_params[:title] %>
+        <%= f.label :ステータス %>
+        <%= f.select :status, [ "未着手", "着手中", "完了" ], selected: @get_params[:status], include_blank: "" %>
+        <%= f.submit "検索" %>
+        <%= link_to "検索条件クリア", tasks_path %>
       <% end %>
-    </tbody>
-  </table>
-</div>
+    </div><br>
+
+    <button type="button"><%= link_to "新しいToDoリストを作成する", new_task_path %></button>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>タスク名</th>
+          <th>内容</th>
+          <th>期限 <%= link_to "⬇️", tasks_path(sort_expired: 'true') %></th>
+          <th>優先度 <%= link_to "⬇️", tasks_path(sort_priority: "true")%></th>
+          <th>ステータス</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tasks.each do |task| %>
+          <tr>
+            <td><%= task.name %></td>
+            <td><%= task.content %></td>
+            <td><%= task.deadline %></td>
+            <td><%= task.priority %></td>
+            <td><%= task.status %></td>
+            <td><button type="button"><%= link_to "詳細", task_path(task.id) %></button></td>
+            <td><button type="button"><%= link_to "編集", edit_task_path(task.id) %></button></td>
+            <td><button type="button"><%= link_to "削除", task_path(task.id), method: :delete, data: { confirm: '本当に削除していいですか?' } %></button></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @tasks %>
+  </div>
 </div>

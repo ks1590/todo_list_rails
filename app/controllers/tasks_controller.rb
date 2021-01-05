@@ -1,8 +1,19 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:edit, :update, :show, :destroy]
-
+  
+  PRE = 5
+  
   def index
-    @tasks = Task.all.order(created_at: :desc)
+    # @tasks = Task.all.order(created_at: :desc)
+    @get_params = task_get_params
+    @tasks = Task.search(@get_params)
+    if params[:sort_expired]
+      @tasks = @tasks.deadline
+    elsif params[:sort_priority]
+      @tasks = @tasks.priority
+    else
+      @tasks = @tasks.page(params[:page]).per(PRE)
+    end
   end
 
   def new
@@ -41,7 +52,7 @@ class TasksController < ApplicationController
   end
   
 
-  private
+  private  
   def task_params
     params.require(:task).permit(
       :name,
@@ -54,5 +65,9 @@ class TasksController < ApplicationController
 
   def set_task
     @task = Task.find(params[:id])    
+  end
+
+  def task_get_params
+    params.fetch(:search, {}).permit(:name, :status)
   end
 end
