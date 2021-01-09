@@ -5,7 +5,7 @@ class Task < ApplicationRecord
   validates :status, presence: true
   validates :priority, presence: true
 
-  before_create :date_cannot_be_in_the_past
+  validate :date_cannot_be_in_the_past
 
   enum priority: { 低: 0, 中: 1, 高: 2 }
 
