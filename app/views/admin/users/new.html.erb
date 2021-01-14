@@ -9,9 +9,7 @@
       </ul>
     </div>
   <% end %>
-<% end %>
   <br>
-<%= form_with(model: @user, local: true) do |f| %>
   <div>
     <%= f.label :アカウント名　%><br>
     <%= f.text_field :name %>
@@ -27,6 +25,10 @@
   <div>
     <%= f.label :パスワード（確認用）%><br>
     <%= f.password_field :password_confirmation %>
+  </div>
+    <div>
+    <%= f.label :管理権限付与 %>
+    <%= f.check_box :admin %>
   </div>
   <div>
     <%= f.submit "新規作成", disable_with: '新規作成...' %>
