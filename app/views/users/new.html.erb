@@ -1,34 +1,41 @@
-<h1>アカウント新規登録</h1>
-<%= form_with(model: @user, local: true) do |f| %>
-  <% if @user.errors.any? %>
-    <div>
-      <ul>
-        <% @user.errors.full_messages.each do |message| %>
-          <li>・<%= message %></li>
+<section>
+  <div class="contentBx">
+    <div class="formBx">
+      <h2>アカウント新規登録</h2>
+      <%= form_with(model: @user, local: true) do |f| %>
+        <% if @user.errors.any? %>
+          <div class="inputBx">
+            <ul>
+              <% @user.errors.full_messages.each do |message| %>
+                <li>・<%= message %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
-      </ul>
+      <% end %>
+        <br>
+      <%= form_with(model: @user, local: true) do |f| %>
+        <div class="inputBx">
+          <span><%= f.label :アカウント名　%></span>
+          <%= f.text_field :name %>
+        </div>
+        <div class="inputBx">
+          <span><%= f.label :メールアドレス　%></span>
+          <%= f.email_field :email %>
+        </div>
+        <div class="inputBx">
+          <span><%= f.label :パスワード　%></span>
+          <%= f.password_field :password %>
+        </div>
+        <div class="inputBx">
+          <span><%= f.label :パスワード（確認用）%></span>
+          <%= f.password_field :password_confirmation %>
+        </div><br>
+        <div class="inputBx">
+          <%= f.submit "新規作成", disable_with: '新規作成...' %>
+        </div>        
+      <% end %>
+      アカウントをお持ちですか？　<%= link_to "ログインする", new_session_path %>
     </div>
-  <% end %>
-<% end %>
-  <br>
-<%= form_with(model: @user, local: true) do |f| %>
-  <div>
-    <%= f.label :アカウント名　%><br>
-    <%= f.text_field :name %>
   </div>
-    <div>
-    <%= f.label :メールアドレス　%><br>
-    <%= f.email_field :email %>
-  </div>
-  <div>
-    <%= f.label :パスワード　%><br>
-    <%= f.password_field :password %>
-  </div>
-  <div>
-    <%= f.label :パスワード（確認用）%><br>
-    <%= f.password_field :password_confirmation %>
-  </div>
-  <div>
-    <%= f.submit "新規作成", disable_with: '新規作成...' %>
-  </div>
-<% end %>
+</section>

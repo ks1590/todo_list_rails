@@ -1,3 +1,71 @@
-// Place all the styles related to the users controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+
+section .contentBx .formBx {
+  width: 30%;
+}
+
+section .contentBx {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+section .contentBx .formBx h2 {
+  color: #607d8b;
+  font-weight: 600;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  border-bottom: 4px solid #ff4584;
+  display: inline-block;
+  letter-spacing: 1px;
+}
+
+section .contentBx .formBx .inputBx {
+  margin-bottom: 20px;
+}
+
+section .contentBx .formBx span {
+  font-size: 16px;
+  margin-bottom: 5px;
+  display: inline-block;
+  color: #607d8b;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+section .contentBx .formBx input {
+  width: 100%;
+  padding: 10px 20px;
+  outline: none;
+  border: 1px solid #607d8b;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: #607d8b;
+  background: transparent;
+  border-radius: 30px;
+}
+
+section .contentBx .formBx input[type=submit] {
+  background-color: #ff4584;
+  color: #fff;
+  outline: none;
+  border: none;
+  font-size: 18px;
+}
+
+section .contentBx .formBx input[type=submit]:hover {
+  background-color: #f53677;
+}
