@@ -15,10 +15,26 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
-
 @import url('https://fonts.googleapis.com/css2?family=Cabin&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  margin: 0;
+}
 
 .navbar-brand {
   font-family: 'Cabin', sans-serif;
   font-size: 25px;
+}
+
+.alert {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
 }

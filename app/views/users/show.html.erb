@@ -1,2 +1,36 @@
 <h1><%= @user.name %></h1>
 <p><%= @user.email %></p>
+<br>
+<% if current_user.admin? %>
+  <%= link_to "管理者画面", admin_users_path %>
+<% end %>
+<br>
+<button type="button" class="btn btn-info"><%= link_to '新規作成', new_task_path %></button>
+<br>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>タスク名</th>
+      <th>概要</th>
+      <th>終了期限</th>
+      <th>ステータス</th>
+      <th>優先順位</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |t| %>
+      <tr>
+        <td><%= link_to t.name ,task_path(t.id) %></td>
+        <td><%= t.content.truncate(20) %></td>
+        <td><%= t.deadline %></td>
+        <td><%= t.status %></td>
+        <td><%= t.priority %></td>
+        <td><button type="button"><%= link_to "編集", edit_task_path(t.id) %></button></td>
+        <td><button type="button"><%= link_to "削除", task_path(t.id), method: :delete, data: { confirm: '本当に削除していいですか?' } %></button></td>              
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="paginate">
+  <%= paginate @tasks %>
+</div>

@@ -25,7 +25,7 @@ class TasksController < ApplicationController
   def create
     @task = current_user.tasks.build(task_params)
     if @task.save
-      redirect_to tasks_path, notice: "登録しました！"
+      redirect_to tasks_path, success: "新しいToDoリストを登録しました！"
     else
       render :new
     end
@@ -36,22 +36,20 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to tasks_path, notice: "更新しました。"
+      redirect_to tasks_path, info: "#{@task.name}を更新しました。"
     else
       flash[:danger] = "更新に失敗しました。"
       render :edit
     end
-  end
-  
+  end  
 
   def show
   end
 
   def destroy
     @task.destroy
-    redirect_to tasks_path, notice: "削除しました。"
+    redirect_to tasks_path, danger: "#{@task.name}を削除しました。"
   end
-  
 
   private  
   def task_params

@@ -1,6 +1,5 @@
 <nav class="navbar navbar-inverse">
-<% if logged_in? %>
-  
+  <% if logged_in? %>
     <div class="container-fluid container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -21,9 +20,9 @@
         </ul>
       </div>
     </div>
-<% else %>
-  <div class="navbar-brand">
-    <%= link_to 'TODO LIST', new_user_path, style:"color: #fff; text-decoration: none;" %>
-  </div>
-<% end %>
+  <% else %>
+    <div class="navbar-brand">
+      <%= link_to 'TODO LIST', new_user_path, style:"color: #fff; text-decoration: none;" %>
+    </div>
+  <% end %>
 </nav>
