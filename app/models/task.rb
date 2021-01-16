@@ -4,8 +4,9 @@ class Task < ApplicationRecord
   validates :deadline, presence: true
   validates :status, presence: true
   validates :priority, presence: true
-
   validate :date_cannot_be_in_the_past
+
+  belongs_to :user
 
   enum priority: { 低: 0, 中: 1, 高: 2 }
 

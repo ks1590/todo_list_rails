@@ -10,13 +10,12 @@
           <span class="icon-bar"></span>
         </button>
         <div class="navbar-brand">
-          <%= link_to 'ToDo LIST', posts_path %>
+          <%= link_to 'ToDo LIST', tasks_path, style:"color: #fff; text-decoration: none;" %>
         </div>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
-          <li><%= link_to '投稿する', new_post_path %></li>
-          <li><%= link_to 'ホームに戻る', posts_path %></li>      
+        <ul class="nav navbar-nav navbar-right">          
+          <li><%= link_to 'ホームに戻る', tasks_path %></li>      
           <li><%= link_to "プロフィール", user_path(current_user.id) %></li>
           <li><%= link_to "ログアウト", session_path(current_user.id), method: :delete %></li>
         </ul>
