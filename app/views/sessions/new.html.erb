@@ -4,11 +4,11 @@
       <h2>ログイン</h2>
       <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
         <div class="inputBx">
-          <span><%= f.label :メールアドレス　%></span>
+          <span class="label"><%= f.label :メールアドレス　%></span>
           <%= f.email_field :email %>
         </div>
         <div class="inputBx">
-          <span><%= f.label :パスワード　%></span>
+          <span class="label"><%= f.label :パスワード　%></span>
           <%= f.password_field :password %>
         </div><br>
         <div class="inputBx">
