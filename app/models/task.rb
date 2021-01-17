@@ -11,7 +11,7 @@ class Task < ApplicationRecord
   enum priority: { 低: 0, 中: 1, 高: 2 }
 
   def date_cannot_be_in_the_past
-    if deadline < Date.today
+    if deadline < Date.today - 1
       errors.add(:deadline, "過去の日付は設定できません。")
     end
   end

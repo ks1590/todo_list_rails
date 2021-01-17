@@ -1,26 +1,34 @@
-<%= form_with(model: @task, local:true) do |f| %>
-  <div>
-    <%= f.label :タスク名 %><br>
-    <%= f.text_field :name %>
+<div class="container">
+  <div class= "row">
+    <div class="col-xs-8 col-xs-offset-2">
+      <%= form_with(model: @task, local:true) do |f| %>
+        <div class="form-group col-xs-8 col-xs-offset-2">
+          <%= f.label :タスク名 %><br>
+          <%= f.text_field :name, class: "form-control" %>
+        </div>
+        <div class="form-group col-xs-8 col-xs-offset-2">
+          <%= f.label :内容 %><br>
+          <%= f.text_area :content, rows: "6", class: "form-control" %>
+        </div>
+        <div class="form-group col-xs-8 col-xs-offset-2">
+          <%= f.label :終了期限 %><br>
+          <%= f.date_field :deadline %>
+        </div>
+        <div class="form-group col-xs-8 col-xs-offset-2">
+          <%= f.label :優先順位 %><br>
+          <%= f.select :priority, ["低", "中", "高"] %>
+        </div>
+        <div class="form-group col-xs-8 col-xs-offset-2">
+          <%= f.label :ステータス %><br>
+          <%= f.select :status, ["未着手", "着手中", "完了"] %>
+        </div>
+        <div class="form-group col-xs-8 col-xs-offset-2">
+          <%= f.submit "登録", disable_with: '登録中...', class: "btn btn-info btn-block" %>
+        </div>
+        <div class="form-group col-xs-8 col-xs-offset-2">
+          <%= link_to '一覧に戻る', tasks_path, class: "btn btn-default btn-block" %>
+        </div>
+      <% end %>
+    </div>
   </div>
-  <div>
-    <%= f.label :内容 %><br>
-    <%= f.text_area :content %>
-  </div>
-  <div>
-    <%= f.label :終了期限 %><br>
-    <%= f.date_field :deadline %>
-  </div>
-  <div>
-    <%= f.label :優先順位 %><br>
-    <%= f.select :priority, ["低", "中", "高"] %>
-  </div>
-  <div>
-    <%= f.label :ステータス %><br>
-    <%= f.select :status, ["未着手", "着手中", "完了"] %>
-  </div>
-
-  <div>
-    <%= f.submit "登録", disable_with: '登録中...' %>
-  </div>
-<% end %>
+</div>
