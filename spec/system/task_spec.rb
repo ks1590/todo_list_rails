@@ -1,9 +1,14 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   before do
-    FactoryBot.create(:task)
-    FactoryBot.create(:second_task)
-    FactoryBot.create(:third_task)
+    @user = FactoryBot.create(:user)
+    visit new_session_path
+    fill_in 'session_email', with:'test1@example.com'
+    fill_in 'session_password', with:'123456'
+    click_on 'ログイン'
+    FactoryBot.create(:task, user: @user)
+    FactoryBot.create(:second_task, user: @user)
+    FactoryBot.create(:third_task, user: @user)
     visit tasks_path
   end
 
@@ -13,7 +18,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit new_task_path
         fill_in "task_name", with: 'テスト1'
         fill_in "task_content", with: 'タスク詳細'
-        fill_in "task_deadline", with: '002020-12-30'
+        fill_in "task_deadline", with: '002021-12-30'
         select "中", from: 'task_priority'
         select "完了", from: 'task_status'
         click_on "登録"
@@ -37,6 +42,11 @@ RSpec.describe 'タスク管理機能', type: :system do
   end
 
   describe '検索機能' do
+    before do
+      FactoryBot.create(:task, name: "task_test", status: "着手中", user: @user)
+      FactoryBot.create(:second_task, name: "sample", status: "着手中", user: @user)
+    end
+
     context 'タイトルであいまい検索をした場合' do
       it "検索キーワードを含むタスクで絞り込まれる" do
         visit tasks_path
