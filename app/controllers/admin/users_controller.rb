@@ -39,6 +39,17 @@ class Admin::UsersController < ApplicationController
     @tasks = @tasks.page(params[:page]).per(PRE)
   end
 
+  def destroy
+    if @user.destroy
+      flash[:info] = "#{@user.name}さんのデータを削除しました"
+      redirect_to admin_users_path
+    else
+      flash[:info] = '管理権限ユーザーは、最低でも１人は必要です。'
+      redirect_to admin_users_path
+    end
+  end
+  
+
   private
   def user_params
     params.require(:user).permit(

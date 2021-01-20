@@ -82,4 +82,96 @@ RSpec.describe 'ユーザー登録、セッション機能のテスト', type: :
       end
     end
   end
+
+  describe '管理画面のテスト' do
+    before do
+      visit new_session_path
+      fill_in 'session_email', with:'test1@example.com'
+      fill_in 'session_password', with:'123456'
+      click_on 'ログイン'
+    end
+
+    context '管理ユーザーが管理画面にアクセスした場合' do
+      it 'ユーザー一覧の画面に遷移する' do
+        visit admin_users_path
+        expect(current_path).to eq admin_users_path
+        expect(current_path).not_to eq tasks_path
+        expect(page).to have_content 'ユーザーリスト'
+      end
+    end
+
+    context '一般ユーザーが管理画面にアクセスした場合' do
+      it '管理画面にアクセスできない' do
+        visit new_session_path
+        fill_in 'session_email', with:'test2@example.com'
+        fill_in 'session_password', with:'123456'
+        click_on 'ログイン'
+        visit admin_users_path
+        expect(current_path).not_to eq admin_users_path
+        expect(current_path).to eq tasks_path
+        expect(page).to have_content '管理者以外はアクセスできません。'
+      end
+    end
+
+    context '管理ユーザーがユーザーの新規登録した場合' do
+      it '管理者用のユーザー詳細ページに遷移する' do
+        visit new_admin_user_path
+        fill_in 'user_name', with:'test'
+        fill_in 'user_email', with:'admin_test@example.com'
+        fill_in 'user_password', with:'123456'
+        fill_in 'user_password_confirmation', with:'123456'
+        uncheck 'user_admin'
+        click_on '新規作成'
+        expect(page).to have_content 'test'
+        expect(page).to have_content 'admin_test@example.com'
+        expect(page).not_to have_content 'test0'
+        expect(page).to have_content '登録しました'
+        expect(page).to have_content 'ユーザー管理権限'
+      end
+    end
+
+    context '管理ユーザーがプロフィールをクリックした場合' do
+      it '管理者用のユーザー詳細ページにアクセスできる' do
+        test = FactoryBot.create(:user, name: "test", email: "admin_test@example.com")
+        visit admin_users_path
+        click_on 'test'
+        expect(current_path).to eq admin_user_path(test)
+        expect(current_path).not_to eq user_path(test)
+        expect(page).to have_content 'testさんページ'
+        expect(page).to have_content 'ユーザー管理権限 有り'
+      end
+    end
+
+    context '管理ユーザーがを管理者用アカウント編集画面にアクセスした場合' do
+      it 'ユーザーの編集ができる' do
+        visit edit_admin_user_path(@user)
+        fill_in 'user_name', with:'edit_test'
+        fill_in 'user_email', with:'abc@example.com'
+        check 'user_admin'
+        click_on '登録'
+        expect(current_path).to eq admin_user_path(@user)
+        expect(current_path).not_to eq user_path(@user)
+        expect(page).to have_content 'edit_testさんページ'
+        expect(page).to have_content 'abc@example.com'
+        expect(page).to have_content 'ユーザー管理権限 有り'
+        expect(page).to have_content '更新しました'
+        expect(page).not_to have_content 'test2さんページ'
+        expect(page).not_to have_content 'ユーザー管理権限 無し'
+      end
+    end
+
+    context '管理ユーザーがユーザーの削除ボタンを押した場合' do
+      it 'ユーザーの削除ができる' do
+        visit admin_users_path
+        all('tbody tr')[1].click_link '削除'
+        page.driver.browser.switch_to.alert.accept
+        expect(current_path).to eq admin_users_path
+        expect(all('tbody tr')[0]).to have_content "#{@user.name}"
+        expect(all('tbody tr')[0]).to have_content "#{@user.email}"
+        expect(all('tbody tr')[0]).not_to have_content "#{@second_user.name}"
+        expect(all('tbody tr')[0]).not_to have_content "#{@second_user.email}"
+        expect(page).to have_content "#{@second_user.name}さんのデータを削除しました"
+      end
+    end
+  end
 end
