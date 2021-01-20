@@ -1,15 +1,21 @@
-<h1>ログイン</h1>
-<%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
-  <div>
-    <%= f.email_field :email,:placeholder => "メールアドレス" %>
+<section>
+  <div class="contentBx">
+    <div class="formBx">
+      <h2>ログイン</h2>
+      <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
+        <div class="inputBx">
+          <span class="label"><%= f.label :メールアドレス　%></span>
+          <%= f.email_field :email %>
+        </div>
+        <div class="inputBx">
+          <span class="label"><%= f.label :パスワード　%></span>
+          <%= f.password_field :password %>
+        </div><br>
+        <div class="inputBx">
+          <%= f.submit "ログイン" %>
+        </div>
+      <% end %>      
+      <p>アカウントをお持ちではないですか？</p><%= link_to "新規登録する", new_user_path %>
+    </div>
   </div>
-  <div>
-    <%= f.password_field :password,:placeholder => "パスワード" %>
-  </div>
-  <div>
-    <%= f.submit "ログイン" %>
-  </div>
-  <div>
-    <%= link_to "登録する", new_user_path %>
-  </div>
-<% end %>
+</div>

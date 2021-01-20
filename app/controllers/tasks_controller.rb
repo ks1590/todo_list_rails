@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_action :authenticate_user
   before_action :set_task, only: [:edit, :update, :show, :destroy]
   
   PRE = 5
@@ -12,8 +13,9 @@ class TasksController < ApplicationController
     elsif params[:sort_priority]
       @tasks = @tasks.priority
     else
-      @tasks = @tasks.page(params[:page]).per(PRE)
+      @tasks = @tasks.default
     end
+    @tasks = @tasks.page(params[:page]).per(PRE)
   end
 
   def new
@@ -22,9 +24,9 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     if @task.save
-      redirect_to tasks_path, notice: "登録しました！"
+      redirect_to tasks_path, success: "新しいToDoリストを登録しました！"
     else
       render :new
     end
@@ -35,22 +37,20 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to tasks_path, notice: "更新しました。"
+      redirect_to tasks_path, info: "#{@task.name}を更新しました。"
     else
       flash[:danger] = "更新に失敗しました。"
       render :edit
     end
-  end
-  
+  end  
 
   def show
   end
 
   def destroy
     @task.destroy
-    redirect_to tasks_path, notice: "削除しました。"
+    redirect_to tasks_path, danger: "#{@task.name}を削除しました。"
   end
-  
 
   private  
   def task_params

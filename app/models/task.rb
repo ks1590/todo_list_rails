@@ -4,13 +4,14 @@ class Task < ApplicationRecord
   validates :deadline, presence: true
   validates :status, presence: true
   validates :priority, presence: true
+  validate :date_cannot_be_in_the_past
 
-  before_create :date_cannot_be_in_the_past
+  belongs_to :user
 
   enum priority: { 低: 0, 中: 1, 高: 2 }
 
   def date_cannot_be_in_the_past
-    if deadline < Date.today
+    if deadline < Date.today - 1
       errors.add(:deadline, "過去の日付は設定できません。")
     end
   end

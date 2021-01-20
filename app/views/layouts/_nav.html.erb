@@ -1,5 +1,5 @@
-<% if logged_in? %>  
-  <nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
+  <% if logged_in? %>
     <div class="container-fluid container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -9,18 +9,20 @@
           <span class="icon-bar"></span>
         </button>
         <div class="navbar-brand">
-          <%= link_to 'ToDoリスト', tasks_path %>
+          <%= link_to 'ToDo LIST', tasks_path, style:"color: #fff; text-decoration: none;" %>
         </div>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
-          <%= link_to "プロフィール", user_path(current_user.id) %>
-          <%= link_to "ログアウト", session_path(current_user.id), method: :delete %>
+        <ul class="nav navbar-nav navbar-right">          
+          <li><%= link_to 'ホームに戻る', tasks_path %></li>      
+          <li><%= link_to "プロフィール", user_path(current_user.id) %></li>
+          <li><%= link_to "ログアウト", session_path(current_user.id), method: :delete %></li>
         </ul>
       </div>
     </div>
-  </nav>
-<% else %>
-  <li><%= link_to "新しいアカウントを作成", new_user_path %></li>
-  <li><%= link_to "ログイン", new_session_path %>
-<% end %>
+  <% else %>
+    <div class="navbar-brand">
+      <%= link_to 'TODO LIST', new_user_path, style:"color: #fff; text-decoration: none;" %>
+    </div>
+  <% end %>
+</nav>

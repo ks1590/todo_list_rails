@@ -1,14 +1,9 @@
 class ApplicationController < ActionController::Base
-  before_action :basic_auth
+  # before_action :basic_auth
+  add_flash_types :success, :info, :warning, :danger
 
   protect_from_forgery with: :exception
   include SessionsHelper
-
-  def basic_auth
-    authenticate_or_request_with_http_basic do |username, password|
-      username == 'test' && password == 'pass1234'
-    end
-  end
 
   def authenticate_user
     if current_user == nil
@@ -16,4 +11,10 @@ class ApplicationController < ActionController::Base
       redirect_to new_session_path
     end
   end
+
+  # def basic_auth
+  #   authenticate_or_request_with_http_basic do |username, password|
+  #     username == 'test' && password == '1234'
+  #   end
+  # end
 end
