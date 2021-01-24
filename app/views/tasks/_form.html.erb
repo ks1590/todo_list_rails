@@ -16,11 +16,11 @@
         </div>
         <div class="form-group col-xs-8 col-xs-offset-2">
           <%= f.label :優先順位 %><br>
-          <%= f.select :priority, ["低", "中", "高"] %>
+          <%= f.select(:priority, options_for_select(["低", "中", "高"]),   {include_blank: '選択して下さい'}, {class: "selectpicker select-option"}) %>
         </div>
         <div class="form-group col-xs-8 col-xs-offset-2">
           <%= f.label :ステータス %><br>
-          <%= f.select :status, ["未着手", "着手中", "完了"] %>
+          <%= f.select(:status, options_for_select( ["未着手", "着手中", "完了"]),   {include_blank: '選択して下さい'}, {class: "selectpicker select-option"}) %>
         </div>
         <div class="form-group col-xs-8 col-xs-offset-2">
           <%= f.submit "登録", disable_with: '登録中...', class: "btn btn-info btn-block" %>

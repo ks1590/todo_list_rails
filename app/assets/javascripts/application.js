@@ -12,11 +12,12 @@
 //
 //= require jquery
 //= require bootstrap-sprockets
+//= require bootstrap-select
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
 //= require_tree .
 
-// $(function () {
-//   $(".notice").fadeOut(2000);
-// });
+$(document).on('turbolinks:load', function () {
+  $(window).trigger('load.bs.select.data-api');
+});
