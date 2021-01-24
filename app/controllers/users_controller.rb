@@ -23,15 +23,9 @@ class UsersController < ApplicationController
     redirect_to tasks_path if @user.id != params[:id].to_i
   end
   
-  
-  def show
-    @user = User.find(params[:id])
-  end
-  
   private
   def user_params
     params.require(:user).permit(:name, :email, :password,
                                 :password_confirmation)
   end
-
 end

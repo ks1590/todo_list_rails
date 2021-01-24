@@ -5,7 +5,7 @@ class Admin::UsersController < ApplicationController
   PRE = 5
 
   def index
-    @users = User.all.order(id: "ASC")
+    @users = User.select(:id, :name, :email, :admin).order(created_at: :asc).page(params[:page]).per(PREVIEW)
   end
 
   def new

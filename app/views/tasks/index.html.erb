@@ -17,8 +17,12 @@
         <th>作成者</th>
         <th>タスク名</th>
         <th>内容</th>
-        <th>期限 <%= link_to "⬇️", tasks_path(sort_expired: 'true') %></th>
-        <th>優先度 <%= link_to "⬇️", tasks_path(sort_priority: "true")%></th>
+        <th>期限 <%= link_to tasks_path(sort_expired: "true"), class: 'btn btn-default' do %>
+        <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true" style="font-size: 15px;"></span>
+        <% end %></th>
+        <th>優先度 <%= link_to tasks_path(sort_priority: "true"),  class: 'btn btn-default' do %>
+        <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true" style="font-size: 15px;"></span>
+        <% end %></th>        
         <th>ステータス</th>
       </tr>
     </thead>
@@ -27,7 +31,7 @@
         <tr>
           <td><%= task.user.name %></td>
           <td><%= task.name %></td>
-          <td><%= task.content %></td>
+          <td><%= task.content.truncate(25) %></td>
           <td><%= task.deadline %></td>
           <td><%= task.priority %></td>
           <td><%= task.status %></td>
