@@ -4,7 +4,10 @@
       <%= f.label :タスク検索 %>
       <%= f.text_field :name, placeholder: "キーワード検索", value: @get_params[:title] %>
       <%= f.label :ステータス %>
-      <%= f.select :status, [ "未着手", "着手中", "完了" ], selected: @get_params[:status], include_blank: "" %>
+      <%= f.select(:status, options_for_select([ "未着手", "着手中", "完了" ]),{include_blank: '未選択'}, {class: "selectpicker select-option "}) %>
+      <%= f.label :ラベル %>
+      <%= f.select("label_id", Label.pluck(:name, :id), {include_blank: '未選択'},{class: "selectpicker select-option"}) %>
+      <%# <%= f.select("label_id", Label.pluck(:name, :id), { include_blank: true }) %>
       <%= f.submit "検索" %>
       <%= link_to "検索条件クリア", tasks_path %>
     <% end %>
@@ -22,8 +25,9 @@
         <% end %></th>
         <th>優先度 <%= link_to tasks_path(sort_priority: "true"),  class: 'btn btn-default' do %>
         <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true" style="font-size: 15px;"></span>
-        <% end %></th>        
+        <% end %></th>
         <th>ステータス</th>
+        <th>ラベル</th>
       </tr>
     </thead>
     <tbody>
@@ -35,6 +39,11 @@
           <td><%= task.deadline %></td>
           <td><%= task.priority %></td>
           <td><%= task.status %></td>
+          <td>
+            <% task.labels.each do |label| %>
+              <%= label.name %>
+            <% end %>
+          </td>
           <td><button type="button"><%= link_to "詳細", task_path(task.id), class: "btn btn-default" %></button></td>
           <% if task.user.id == current_user.id %>
             <td><button type="button"><%= link_to "編集", edit_task_path(task.id), class: "btn btn-default" %></button></td>

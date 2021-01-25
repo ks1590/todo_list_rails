@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "users#new"
+  root "tasks#index"
   resources :users, only: [:new, :create, :show ]
   namespace :admin do
     resources :users

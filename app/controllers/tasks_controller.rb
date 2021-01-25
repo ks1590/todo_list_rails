@@ -6,6 +6,9 @@ class TasksController < ApplicationController
   
   def index
     # @tasks = Task.all.order(created_at: :desc)
+    # @tasks = Task.all
+    # @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
+    
     @get_params = task_get_params
     @tasks = Task.search(@get_params)
     if params[:sort_expired]
@@ -59,7 +62,8 @@ class TasksController < ApplicationController
       :content,
       :deadline,
       :priority,
-      :status
+      :status,
+      label_ids:[]
     )    
   end
 
@@ -68,6 +72,6 @@ class TasksController < ApplicationController
   end
 
   def task_get_params
-    params.fetch(:search, {}).permit(:name, :status)
+    params.fetch(:search, {}).permit(:name, :status, :label_id )
   end
 end
