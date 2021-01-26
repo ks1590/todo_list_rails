@@ -4,11 +4,7 @@ class TasksController < ApplicationController
   
   PRE = 5
   
-  def index
-    # @tasks = Task.all.order(created_at: :desc)
-    # @tasks = Task.all
-    # @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
-    
+  def index    
     @get_params = task_get_params
     @tasks = Task.search(@get_params)
     if params[:sort_expired]
