@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :authenticate_user
   before_action :set_task, only: [:edit, :update, :show, :destroy]
   
-  PRE = 5
+  PREVIEW = 5
   
   def index    
     @get_params = task_get_params
@@ -14,7 +14,7 @@ class TasksController < ApplicationController
     else
       @tasks = @tasks.default
     end
-    @tasks = @tasks.page(params[:page]).per(PRE)
+    @tasks = @tasks.page(params[:page]).per(PREVIEW)
   end
 
   def new

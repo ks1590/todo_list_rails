@@ -2,7 +2,7 @@ class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy, :show]
   before_action :require_admin
 
-  PRE = 5
+  PREVIEW = 5
 
   def index
     @users = User.select(:id, :name, :email, :admin).order(created_at: :asc).page(params[:page]).per(PREVIEW)
@@ -36,7 +36,7 @@ class Admin::UsersController < ApplicationController
 
   def show
     @tasks = @user.tasks
-    @tasks = @tasks.page(params[:page]).per(PRE)
+    @tasks = @tasks.page(params[:page]).per(PREVIEW)
   end
 
   def destroy

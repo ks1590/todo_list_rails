@@ -39,32 +39,32 @@ RSpec.describe 'タスクモデル', type: :model do
 
     context 'scopeメソッドでステータス検索をした場合' do
       it "ステータスに完全一致するタスクが絞り込まれる" do
-        expect(Task.status('未着手')).to include(task)
-        expect(Task.status('未')).not_to include(task)
-        expect(Task.status('未着手')).not_to include(second_task,third_task)
-        expect(Task.status('着手中')).to include(second_task)
-        expect(Task.status('着手')).not_to include(second_task)
-        expect(Task.status('着手中')).not_to include(task,third_task)
-        expect(Task.status('完了')).to include(third_task)
-        expect(Task.status('完')).not_to include(third_task)
-        expect(Task.status('完了')).not_to include(task,second_task)
-        expect(Task.status('未着手').count).to eq 1
-        expect(Task.status('着手中').count).to eq 1
-        expect(Task.status('完了').count).to eq 1
-        expect(Task.status('着手').count).to eq 0
+        expect(Task.check_status('未着手')).to include(task)
+        expect(Task.check_status('未')).not_to include(task)
+        expect(Task.check_status('未着手')).not_to include(second_task,third_task)
+        expect(Task.check_status('着手中')).to include(second_task)
+        expect(Task.check_status('着手')).not_to include(second_task)
+        expect(Task.check_status('着手中')).not_to include(task,third_task)
+        expect(Task.check_status('完了')).to include(third_task)
+        expect(Task.check_status('完')).not_to include(third_task)
+        expect(Task.check_status('完了')).not_to include(task,second_task)
+        expect(Task.check_status('未着手').count).to eq 1
+        expect(Task.check_status('着手中').count).to eq 1
+        expect(Task.check_status('完了').count).to eq 1
+        expect(Task.check_status('着手').count).to eq 0
       end
     end
 
     context 'scopeメソッドでタイトルのあいまい検索とステータス検索をした場合' do
       it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
-        expect(Task.name_like('es').status('未着手')).to include(task)
-        expect(Task.name_like('es').status('未着手')).not_to include(second_task,third_task)
-        expect(Task.name_like('es').status('着手中')).to include(second_task)
-        expect(Task.name_like('es').status('着手中')).not_to include(task,third_task)
-        expect(Task.name_like('es').status('完了')).to include(third_task)
-        expect(Task.name_like('es').status('完了')).not_to include(task,second_task)
-        expect(Task.name_like('es').status('未着手').count).to eq 1
-        expect(Task.name_like('es').status('着手中').count).to eq 1
+        expect(Task.name_like('es').check_status('未着手')).to include(task)
+        expect(Task.name_like('es').check_status('未着手')).not_to include(second_task,third_task)
+        expect(Task.name_like('es').check_status('着手中')).to include(second_task)
+        expect(Task.name_like('es').check_status('着手中')).not_to include(task,third_task)
+        expect(Task.name_like('es').check_status('完了')).to include(third_task)
+        expect(Task.name_like('es').check_status('完了')).not_to include(task,second_task)
+        expect(Task.name_like('es').check_status('未着手').count).to eq 1
+        expect(Task.name_like('es').check_status('着手中').count).to eq 1
       end
     end
   end
