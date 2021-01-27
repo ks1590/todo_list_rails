@@ -8,6 +8,9 @@ class Task < ApplicationRecord
 
   belongs_to :user
 
+  has_many :task_labels, dependent: :destroy
+  has_many :labels, through: :task_labels
+
   enum priority: { 低: 0, 中: 1, 高: 2 }
 
   def date_cannot_be_in_the_past
@@ -16,32 +19,18 @@ class Task < ApplicationRecord
     end
   end
 
-  scope :search, -> (get_params) do
-    name = get_params[:name]
-    status = get_params[:status]
-    # label = get_params[:label_id]
-    return if get_params.blank?
-    if name.present? && status.present?
-      name_like(name).status(status)
-    elsif name.present? && status.present?
-      name_like(name).status(status)
-    # elsif name.present? && label.present?
-    #   name_like(name).label(label)
-    # elsif status.present? && label.present?
-    #   status(status).label(label)
-    elsif name.present?
-      name_like(name)
-    elsif status.present?
-      status(status)
-    # elsif label.present?
-    #   label(label)
-    end
+  scope :search, -> (search_params) do
+    name = search_params[:name]
+    status = search_params[:status]
+    label = search_params[:label_id]
+    return if search_params.blank?
+    name_like(name).check_status(status).check_label(label)
   end
 
-  scope :name_like, -> name { where('name LIKE ?', "%#{name}%") }
-  scope :status, -> status { where(status: status) }
+  scope :name_like, -> name { where('name LIKE ?', "%#{name}%") if name.present? }
+  scope :check_status, -> status { where(status: status) if status.present? }
   scope :deadline, -> { order(deadline: :desc) }
   scope :default, -> { order(created_at: :desc) }
   scope :priority, -> { order(priority: :desc) }
-  # scope :label, -> label_id { joins(:labels).where(labels:  { id: label_id }) }
+  scope :check_label, -> label_id { joins(:labels).where(labels: { id: label_id }) if label_id.present? }
 end

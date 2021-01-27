@@ -16,6 +16,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'faker'
 
+gem 'pry-rails'
+
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap-sass', '~> 3.4.1'
 gem 'bootstrap-select-rails'

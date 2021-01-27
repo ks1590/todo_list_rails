@@ -2,10 +2,9 @@ class TasksController < ApplicationController
   before_action :authenticate_user
   before_action :set_task, only: [:edit, :update, :show, :destroy]
   
-  PRE = 5
+  PREVIEW = 5
   
-  def index
-    # @tasks = Task.all.order(created_at: :desc)
+  def index    
     @get_params = task_get_params
     @tasks = Task.search(@get_params)
     if params[:sort_expired]
@@ -15,7 +14,7 @@ class TasksController < ApplicationController
     else
       @tasks = @tasks.default
     end
-    @tasks = @tasks.page(params[:page]).per(PRE)
+    @tasks = @tasks.page(params[:page]).per(PREVIEW)
   end
 
   def new
@@ -59,7 +58,8 @@ class TasksController < ApplicationController
       :content,
       :deadline,
       :priority,
-      :status
+      :status,
+      label_ids:[]
     )    
   end
 
@@ -68,6 +68,6 @@ class TasksController < ApplicationController
   end
 
   def task_get_params
-    params.fetch(:search, {}).permit(:name, :status)
+    params.fetch(:search, {}).permit(:name, :status, :label_id )
   end
 end

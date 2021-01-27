@@ -1,5 +1,3 @@
-I18n.config.available_locales = :en
-
 password = "123456"
 
 User.create!(
@@ -39,4 +37,16 @@ end_date = Date.parse("2021/02/28")
               status: status.sample,
               priority: rand(0..2),
               user_id: rand(1..5))
+end
+
+labels = ["赤", "黄", "緑", "青"]
+
+labels.each {|label|
+  Label.create!(
+    name: label
+  )
+}
+
+20.times do |n|
+  TaskLabel.create!(task_id: rand(1..20), label_id: rand(1..4))
 end

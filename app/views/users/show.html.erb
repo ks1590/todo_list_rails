@@ -15,6 +15,7 @@
       <th>終了期限</th>
       <th>ステータス</th>
       <th>優先順位</th>
+      <th>ラベル</th>
     </tr>
   </thead>
   <tbody>
@@ -25,6 +26,11 @@
         <td><%= t.deadline %></td>
         <td><%= t.status %></td>
         <td><%= t.priority %></td>
+        <td>
+          <% t.labels.each do |label| %>
+            <%= label.name %>
+          <% end %>
+          </td>
         <td><button type="button"><%= link_to "編集", edit_task_path(t.id) %></button></td>
         <td><button type="button"><%= link_to "削除", task_path(t.id), method: :delete, data: { confirm: '本当に削除していいですか?' } %></button></td>              
       </tr>
